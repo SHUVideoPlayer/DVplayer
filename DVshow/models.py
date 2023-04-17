@@ -16,7 +16,7 @@ class Video(models.Model):
         db_table = "视频"
     
     
-class Classification(models.Model)：
+class Classification(models.Model):
     Ccode = models.AutoField(primary_key=True,verbose_name="视频分区号")
     Title = models.CharField(max_length=20,verbose_name="视频分区")
     class Meta:
