@@ -8,7 +8,7 @@ class Video(models.Model):
     ReleaseTime = models.DateTimeField(auto_now_add=True,verbose_name="发布时间")
     Viewsnum = models.BigIntegerField(default=0,verbose_name="播放量")
     User = models.ForeignKey(verbose_name="作者")
-    Section = models.ForeignKey(verbose_name="分区")
+    Classification = models.ForeignKey(Classification,verbose_name="分区")
     VideoFile = models.FileField(upload_to="video/",verbose_name="视频文件")
     CoverFile = models.ImageField(upload_to="cover/",verbose_name="封面文件")
     
