@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'bootstrap4',
+
+    'User',
+    'DVshow',
+    'InterACT',
+    'Upload',
+
+
 ]
 
 MIDDLEWARE = [
@@ -51,10 +60,27 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'DVhub.urls'
 
+
+
+
+
+# 文件上传路径
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Media').replace('\\', '/')
+#MEDIA_URL = '/upload/'
+
+# 上传视频最大尺寸
+CHUNKED_UPLOAD_MAX_BYTES = 10000000000
+
+
+
+
+
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
