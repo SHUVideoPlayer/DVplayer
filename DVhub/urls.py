@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     
-    path('video/',views.index,name="index")
+    path('vupload/',views.vupload,name='upload')
 ]
