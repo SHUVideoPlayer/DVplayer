@@ -19,6 +19,7 @@ def Register(request):
         md1.Email=request.POST.get('Email')
         md1.Phone_number=request.POST.get('Phone_number')
         md1.Profile_photo=request.FILES.get('Profile_photo')
+        md1.Background_photo=request.FILES.get('Profile_photo')
         now_time = timezone.now().astimezone(tz=tz).strftime("%Y-%m-%d %H:%M:%S")
         now = datetime.datetime.strptime(now_time, '%Y-%m-%d %H:%M:%S')
         md1.Register_time=now
@@ -37,3 +38,34 @@ def Register(request):
     return render(request,'Register.html',{
                                             'RegisterForm':RegiForm
                                             })
+
+def test(request):
+    return render(request, 'index.html')
+
+
+def UserPage(request):
+    islogin(request)
+    userid=request.session.get('UserID', None)
+    user=models.User.objects.filter(User_ID=userid).first()
+    print(user.Email)
+    print(user.Profile_photo.url)
+    return render(request,'author.html',{'user':user})
+
+def islogin(request):
+    if not (request.session.get('is_login', None) == True):
+        return(request,'signin.html')
+def signin(request):
+    islogin(request)
+    if (request.method == "POST"):
+        Useremail=request.POST.get('email')
+        Userpassword=request.POST.get('password')
+        try:
+            user=models.User.objects.filter(Email=Useremail).first()
+            if user.Password == Userpassword:
+                request.session['is_login']=True
+                request.session['UserID']=user.User_ID
+                print('true')
+                return UserPage(request)
+        except:
+                print('无此邮箱')
+    return render(request, 'signin.html')
