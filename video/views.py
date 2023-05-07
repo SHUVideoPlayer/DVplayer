@@ -14,7 +14,6 @@ def vupload(request):
         return redirect('vupload/')
     else:
         form = VideoForm()
-        print("hhh")
         return render(request,"upload.html",{'form':form})
     
 
