@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import InterACT.views as IACT
 
 urlpatterns = [
+    path('', IACT.view_test),
     path('admin/', admin.site.urls),
 ]
