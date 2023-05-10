@@ -30,6 +30,9 @@
     <filter-actions connection-id="1c0d578a-024f-40ec-98bc-a6b68e24c273" dataset="main.User_user" active-filter-id="" />
     <filter-actions connection-id="1c0d578a-024f-40ec-98bc-a6b68e24c273" dataset="main.django_session" active-filter-id="" />
   </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
