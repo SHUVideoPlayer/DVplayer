@@ -18,6 +18,17 @@ def comment_view(request, DV_code):
     return render(request, 'Comment_view.html', context)
 
 
-def comment_add(request, DV_code):
+def my_comment_add(request, DV_code):
     Userviews.islogin(request)
     return render(request, 'Comment_view.html')
+
+
+def my_comment_view(request, DV_code):
+    Userviews.islogin(request)
+    comment_list = IACTmodels.Comment_Table.objects.filter(DV=videomodels.Video.objects.get(DVcode=DV_code),
+                                                           User=Usermodels.User.objects.get(
+                                                               User_ID=request.session["UserID"]))
+    context = {
+        "Comment", comment_list
+    }
+    return render(request, 'Comment_view.html', context)
