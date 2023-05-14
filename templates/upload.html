@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="{% static  't1/css/theme.css' %}">
     <title>Upload your video</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+    	<link href="{% static 'dropdowns.css' %}" rel="stylesheet">
+    <script src="{%static 'bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+    <script src="{%static 'bootstrap/js/bootstrap.min.js'%}"></script>
+    <script src="{% static  't1/js/theme.js' %}"></script>
+    <script src="{% static  't1/js/app.js' %}"></script>
 </head>
 <body>
     
@@ -18,7 +23,7 @@
         <button class="navbar-light navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-        {% comment %} <div class="collapse navbar-collapse" id="navbarsDefault">
+        {% comment %} <ul class="collapse navbar-collapse" id="navbarsDefault">
             <ul class="navbar-nav mr-auto align-items-center">
                 <form class="bd-search hidden-sm-down">
                     <input type="text" class="form-control bg-graylight border-0 font-weight-bold" id="search-input" placeholder="Search..." autocomplete="off">
@@ -33,9 +38,36 @@
                 <li class="nav-item">
                 <a class="nav-link" href="post.html">Post</a>
                 </li>
-                <li class="nav-item">
-                <a class="nav-link" href="author.html"><img class="rounded-circle mr-2" src="{% static  't1/img/av.png' %}" width="30"><span class="align-middle">Author</span></a>
-                </li>
+    		<li class="nav-item dropdown">
+    		<a class="nav-link" href="#" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img class="rounded-circle mr-2" src="{{user.Profile_photo.url}}" width="30"><span class="align-middle">{{user.NickName}}用户名</span></a>
+    <div class="dropdown-menu dropdown-menu-right shadow-lg " style="width:190px" aria-labelledby="dropdown08">
+        <div class="container" style="text-align:left ">
+         <div class="row clearfix">
+        <div class="col-md-4 column" href="#">
+        <a><h5>66</h5></a>
+            <a>关注</a>
+        </div>
+        <div class="col-md-4 column" href="#">
+        <a><h5>66</h5></a>
+            <a>粉丝</a>
+        </div>
+        <div class="col-md-4 column" href="#">
+        <a><h5>66</h5></a>
+            <a>投稿</a>
+        </div>
+         </div>
+            </div>
+    <span><a class="dropdown-item rounded-2" href="#">个人中心</a></span>
+    <span><a class="dropdown-item rounded-2" href="#">关注</a></span>
+    <span><a class="dropdown-item rounded-2" href="#">粉丝</a></span>
+    <span><a class="dropdown-item rounded-2" href="#">投稿管理</a></span>
+    <span><a class="dropdown-item rounded-2"  href="#">我的收藏</a></span>
+     <div class="dropdown-divider">
+     </div>
+    <span><a class="dropdown-item rounded-2" href="#">退出登录</a></span>
+    </div>
+
+			</li>
                 <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <svg style="margin-top:10px;" class="_3DJPT" version="1.1" viewbox="0 0 32 32" width="21" height="21" aria-hidden="false" data-reactid="71"><path d="M7 15.5c0 1.9-1.6 3.5-3.5 3.5s-3.5-1.6-3.5-3.5 1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5zm21.5-3.5c-1.9 0-3.5 1.6-3.5 3.5s1.6 3.5 3.5 3.5 3.5-1.6 3.5-3.5-1.6-3.5-3.5-3.5zm-12.5 0c-1.9 0-3.5 1.6-3.5 3.5s1.6 3.5 3.5 3.5 3.5-1.6 3.5-3.5-1.6-3.5-3.5-3.5z" data-reactid="22"></path></svg>
@@ -54,14 +86,20 @@
     
     <div class="container ">
         <div class="row clearfix">
-            <div class="col-md-12 column">
+            <div class="col-md-6 column">
                 <form role="form" action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    </div> <button type="submit">提交</button>
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                    <input type="submit" class="btn btn-info btn-lg btn-block" value="提交">
+                    {% endbuttons%}
                 </form>
             </div>
         </div>
     </div>
+
+
+
+
 </body>
 </html>

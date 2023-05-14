@@ -1,4 +1,5 @@
-{% load static  %}
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,15 +9,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Author - Pintereso Bootstrap Template</title>
     <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
-    <link rel="stylesheet" href="{% static  't1/css/app.css' %}">
-    <link rel="stylesheet" href="{% static  't1/css/theme.css' %}">
-
+    <link rel="stylesheet" href="{% static 't1assets/css/app.css' %}">
+    <link rel="stylesheet" href="{% static 't1assets/css/theme.css' %}">
+	<link href="{% static 'dropdowns.css' %}" rel="stylesheet">
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+
+    <a class="navbar-brand font-weight-bolder mr-3" href="index.html"><img src="{{MEDIA_URL}} 'logo.jpg'"></a>
+
     <a class="navbar-brand font-weight-bolder mr-3" href="index.html"><img src="assets/img/logo.png"></a>
+
     <button class="navbar-light navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,8 +41,10 @@
     		<a class="nav-link" href="post.html">Post</a>
     		</li>
     		<li class="nav-item">
-    		<a class="nav-link" href="author.html"><img class="rounded-circle mr-2" src="assets/img/av.png" width="30"><span class="align-middle">Author</span></a>
-    		</li>
+    		<a class="nav-link" href="author.html"><img class="rounded-circle mr-2" src="{{user.Profile_photo.url}}" width="30"><span class="align-middle">Author</span></a>
+
+
+			</li>
     		<li class="nav-item dropdown">
     		<a class="nav-link" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     		<svg style="margin-top:10px;" class="_3DJPT" version="1.1" viewbox="0 0 32 32" width="21" height="21" aria-hidden="false" data-reactid="71"><path d="M7 15.5c0 1.9-1.6 3.5-3.5 3.5s-3.5-1.6-3.5-3.5 1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5zm21.5-3.5c-1.9 0-3.5 1.6-3.5 3.5s1.6 3.5 3.5 3.5 3.5-1.6 3.5-3.5-1.6-3.5-3.5-3.5zm-12.5 0c-1.9 0-3.5 1.6-3.5 3.5s1.6 3.5 3.5 3.5 3.5-1.6 3.5-3.5-1.6-3.5-3.5-3.5z" data-reactid="22"></path></svg>
@@ -53,12 +60,13 @@
     </div>
     </nav>    
     <main role="main">
-        
-    
-    <div class="jumbotron border-round-0 min-50vh" style="background-image:url(https://images.unsplash.com/photo-1522204657746-fccce0824cfd?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=84b5e9bea51f72c63862a0544f76e0a3&auto=format&fit=crop&w=1500&q=80);">
+  <div>
+
+	  </div>
+    <div class="jumbotron border-round-0 min-50vh" style="background-image:url({{user.Background_photo.url}});">
     </div>
     <div class="container mb-4">
-    	<img src="assets/img/av.png" class="mt-neg100 mb-4 rounded-circle" width="128">
+    	<img src="{{user.Profile_photo.url}}" class="mt-neg100 mb-4 rounded-circle" width="128">
     	<h1 class="font-weight-bold title">Sal</h1>
     	<p>
     		I love Art, Web Design, Photography, Design, Illustration
@@ -197,6 +205,7 @@
     					</div>
     				</div>
     			</div>
+
     			<div class="card card-pin">
     				<img class="card-img" src="https://images.unsplash.com/photo-1502550900787-e956c314a221?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e90f191de3a03c2002ac82c009490e07&auto=format&fit=crop&w=500&q=60" alt="Card image">
     				<div class="overlay">
@@ -228,7 +237,11 @@
     				</div>
     			</div>
     			<div class="card card-pin">
+
+    				<img class="card-img" src="https://images.unsplash.com/photo-1518707399486-6d702a84ff00?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b5bb16fa7eaed1a1ed47614488f7588d&auto=format&fit=crop&w=500&q=60" alt="Card image">
+
     				<img class="card-img" src="https://images.unsplash.com/photo-1418707399486-6d702a84ff00?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b5bb16fa7eaed1a1ed47614488f7588d&auto=format&fit=crop&w=500&q=60" alt="Card image">
+
     				<div class="overlay">
     					<h2 class="card-title title">Some Title</h2>
     					<div class="more">

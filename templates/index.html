@@ -1,4 +1,4 @@
-{% load static  %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home - Pintereso Bootstrap Template</title>
     <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+
+    <link rel="stylesheet" href="{% static 't1assets/css/app.css' %}">
+    <link rel="stylesheet" href="{% static 't1assets/css/theme.css' %}">
+
     <link rel="stylesheet" href="{% static  't1/css/app.css' %}">
     <link rel="stylesheet" href="{% static  't1/css/theme.css' %}">
+
 
 </head>
 
@@ -52,8 +57,13 @@
     	</ul>
     </div>
     </nav>    
+{% comment %} <<<<<<< HEAD {% endcomment %}
+    <main role="main">
+        
+{% comment %} =======
     
     
+>>>>>>> origin/fdev {% endcomment %}
     
     <section class="mt-4 mb-5">
     <div class="container mb-4">
@@ -177,7 +187,11 @@
     				</div>
     			</div>
     			<div class="card card-pin">
+{% comment %} <<<<<<< HEAD {% endcomment %}
+    				<img class="card-img" src="https://images.unsplash.com/photo-1513028179155-324cfec2566c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=32ce1df4016dadc177d6fce1b2df2429&auto=format&fit=crop&w=350&q=80" alt="Card image">
+{% comment %} =======
     				<img class="card-img" src="https://images.unsplash.com/photo-1513048179155-324cfec2566c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=32ce1df4016dadc177d6fce1b2df2429&auto=format&fit=crop&w=350&q=80" alt="Card image">
+>>>>>>> origin/fdev {% endcomment %}
     				<div class="overlay">
     					<h2 class="card-title title">Cool Title</h2>
     					<div class="more">
@@ -277,7 +291,11 @@
     				</div>
     			</div>
     			<div class="card card-pin">
+<<<<<<< HEAD
+    				<img class="card-img" src="https://images.unsplash.com/photo-1512355144108-e94a235b10af?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c622d56d975113a08c71c912618b5f83&auto=format&fit=crop&w=500&q=60" alt="Card image">
+=======
     				<img class="card-img" src="https://images.unsplash.com/photo-1506706435692-290e0c5b4505?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0bb464bb1ceea5155bc079c4f50bc36a&auto=format&fit=crop&w=500&q=60" alt="Card image">
+>>>>>>> origin/fdev
     				<div class="overlay">
     					<h2 class="card-title title">Cool Title</h2>
     					<div class="more">
@@ -296,6 +314,10 @@
     					</div>
     				</div>
     			</div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/fdev
     		</div>
     	</div>
     </div>
