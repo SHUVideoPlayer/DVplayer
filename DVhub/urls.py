@@ -26,8 +26,9 @@ urlpatterns = [
     path('Register/',User.views.Register),
     path('',User.views.test),
     path('s',User.views.signin),
-    path('user',User.views.UserPage),
+    path('user/',User.views.UserPage),
     path('vupload/',views.vupload,name='upload'),
+    path('vmodify/<int:dvcode>',views.vmodify,name='modify'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

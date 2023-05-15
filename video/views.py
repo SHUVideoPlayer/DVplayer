@@ -1,10 +1,8 @@
-from django.shortcuts import render,redirect,HttpResponseRedirect
+from django.shortcuts import render,redirect,HttpResponse
 from .forms import VideoForm
 from .models import Video,User,Classification
 # Create your views here.
 
-
-    
 def vupload(request):
     if request.method == 'POST':
         form = VideoForm(request.POST, request.FILES)
@@ -27,10 +25,19 @@ def vupload(request):
         if not (request.session.get('is_login', None) == True):
             print("here")
             return redirect('/s')
-        
         form = VideoForm()
         return render(request,"upload.html",{'form':form})
     
 
-
+def vmodify(request,dvcode):
+    tvideo=Video.objects.filter(DVcode=dvcode).first()
+    if tvideo is None:
+        return render(request,"wrong/NosuchFile.html")
+    if request.method == 'POST':
+        form = VideoForm(instance=tvideo, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = VideoForm(instance=tvideo)
+    return render(request,"modify.html",{'form':form})
 

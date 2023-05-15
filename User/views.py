@@ -19,7 +19,7 @@ def Register(request):
         md1.Email=request.POST.get('Email')
         md1.Phone_number=request.POST.get('Phone_number')
         md1.Profile_photo=request.FILES.get('Profile_photo')
-        md1.Background_photo=request.FILES.get('Profile_photo')
+        md1.Background_photo=request.FILES.get('Background_photo')
         now_time = timezone.now().astimezone(tz=tz).strftime("%Y-%m-%d %H:%M:%S")
         now = datetime.datetime.strptime(now_time, '%Y-%m-%d %H:%M:%S')
         md1.Register_time=now
