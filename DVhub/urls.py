@@ -23,13 +23,19 @@ import User.views
 from video import views
 
 urlpatterns = [
-    path('', IACT.view_test),
     path('admin/', admin.site.urls),
     path('Register/',User.views.Register),
     path('',User.views.test),
     path('s',User.views.signin),
     path('user',User.views.UserPage),
     path('vupload/',views.vupload,name='upload'),
+
+
+    path('comment/',IACT.comment),
+    #登记函数
+    path('commentChangeStatus',IACT.commentChangeStatus),
+    path('commentEdit',IACT.commentEdit),
+    path('commentDelete',IACT.commentDelete),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

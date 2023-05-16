@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评论页面</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <style>
+        .commentBg {
+            background: #000;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            opacity: 0.3;
+            display: none;
+        }
+
+        .commentMain {
+            background: #fff;
+            border-radius: 10px;
+            position: fixed;
+            z-index: 1;
+            width: 400px;
+            height: 286px;
+            margin-top: -143px;
+            top: 50%;
+            left: 50%;
+            margin-left: -200px;
+            display: none;
+        }
+
+        .comment_title {
+            line-height: 40px;
+            text-align: center;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .comment_title a {
+            position: absolute;
+            right: 10px;
+            top: 0;
+            line-height: 40px;
+        }
+
+        .comment_text {
+            border: solid 1px #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .comment_text textarea {
+            border: none;
+            outline: none;
+            resize: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        .comment_btn a {
+            display: block;
+            line-height: 40px;
+            text-align: center;
+            background: red;
+            margin: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 16px;
+            text-align: center;
+        }
+
+        table, tr, td, th {
+            border: solid 1px #ccc;
+            border-collapse: collapse;
+            font-size: 14px;
+            line-height: 40px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th {
+            background: #ccc;
+            font-weight: normal;
+        }
+
+        .page {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .page a {
+            margin-right: 10px;
+        }
+
+        .page a:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="num">
+    <div>收藏数字：<span class="favorite">{{ favorite }}</span></div>
+    {% if favoriteRow %}
+        <a href="javascript:;" onclick="btnClick({{ userId }},{{ DV }},'favorite')" class="favoriteBtn">取消收藏</a>
+    {% else %}
+        <a href="javascript:;" onclick="btnClick({{ userId }},{{ DV }},'favorite')" class="favoriteBtn">收藏</a>
+    {% endif %}
+</div>
+<hr/>
+<div class="num">
+    <div>点赞数字：<span class="like">{{ likeCount }}</span></div>
+    {% if likeRow %}
+        <a href="javascript:;" onclick="btnClick({{ userId }},{{ DV }},'like')" class="likeBtn">取消点赞</a>
+    {% else %}
+        <a href="javascript:;" onclick="btnClick({{ userId }},{{ DV }},'like')" class="likeBtn">点赞</a>
+    {% endif %}
+</div>
+<hr/>
+<div class="num">
+    <a href="javascript:;" onclick="showMsg()">发布评论</a>
+</div>
+<hr/>
+<h1>评论列表</h1>
+<table>
+    <tr>
+        <th width="20%">ID</th>
+        <th>内容</th>
+        <th width="20%">时间</th>
+        <th width="20%">操作</th>
+    </tr>
+    {% for item in commentList %}
+        <tr>
+            <td align="center">{{ item.Comment_id }}</td>
+            <td style="padding: 0 10px;">{{ item.Comment }}</td>
+            <td align="center">{{ item.Time }}</td>
+            {% if item.User.User_ID == userId %}
+                <td align="center">
+                    <a href="javascript:;" onclick="commentEdit('{{ item.Comment }}',{{ item.Comment_id }})">修改</a> |
+                    <a href="javascript:;" onclick="commentDelete({{ item.Comment_id }})">删除</a></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+</table>
+
+<div class="page">
+    {% for item in pagecount %}
+        <a href="/comment?page={{ item }}">{{ item }}</a>
+    {% endfor %}
+</div>
+
+<div class="commentBg"></div>
+<div class="commentMain">
+    <div class="comment_title">发布评论<a href="javscript:;" onclick="closeMsg()">关闭弹窗</a></div>
+    <div class="comment_text">
+        <textarea name="textarea" id="" cols="30" rows="10" placeholder="请输入评论内容" class="comment"></textarea>
+    </div>
+    <div class="comment_btn"><a href="javascript:;" onclick="submitComment()">点击提交</a></div>
+</div>
+<script>
+    var globalId = 0
+
+    function btnClick(userId, DV, type) {
+        var status = 0
+        if (type == 'favorite') {
+            status = $('.favoriteBtn').text() == '收藏' ? 1 : 0
+        }
+        if (type == 'like') {
+            status = $('.likeBtn').text() == '点赞' ? 1 : 0
+        }
+        $.ajax({
+            url: '/commentChangeStatus',
+            data: {
+                userId: userId,
+                DV: DV,
+                type: type,
+                status: status
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (type == 'favorite') {
+                    $('.favorite').text(res.data.count)
+                    if (status == 0) {
+                        $('.favoriteBtn').text('收藏')
+                    } else {
+                        $('.favoriteBtn').text('取消收藏')
+                    }
+                }
+                if (type == 'like') {
+                    $('.like').text(res.data.count)
+                    if (status == 0) {
+                        $('.likeBtn').text('点赞')
+                    } else {
+                        $('.likeBtn').text('取消点赞')
+                    }
+                }
+            }
+        });
+    }
+
+    function submitComment() {
+        var comment = $('.comment').val()
+        if (comment == '') {
+            alert('请输入评论内容')
+            return
+        }
+        $.ajax({
+            url: '/commentEdit',
+            data: {
+                id: globalId,
+                userId: '{{ userId }}',
+                DV: '{{ DV }}',
+                comment: comment,
+                type: globalId > 0 ? 1 : 0
+            },
+            dataType: 'json',
+            success: function (res) {
+                window.location.href = window.location.href
+            }
+        });
+    }
+
+    function commentEdit(Comment, id) {
+        $('.comment').val(Comment)
+        globalId = id
+        showMsg()
+    }
+
+    function closeMsg() {
+        $('.comment').val('')
+        globalId = 0
+        $('.commentBg, .commentMain').hide()
+    }
+
+    function showMsg() {
+        $('.commentBg, .commentMain').show()
+    }
+
+    function commentDelete(id) {
+        var is = confirm('确定删除？')
+        if (is) {
+            $.ajax({
+                url: '/commentDelete',
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (res) {
+                    window.location.href = window.location.href
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>
