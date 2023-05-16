@@ -28,6 +28,9 @@ urlpatterns = [
     path('s',User.views.signin),
     path('user',User.views.UserPage),
     path('vupload/',views.vupload,name='upload'),
+    path('profile/',User.views.profile,name='profile'),
+    path('password/',User.views.password,name='password'),
+    path('imgcenter/',User.views.imgcenter,name='imgcenter'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

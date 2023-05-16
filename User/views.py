@@ -1,7 +1,7 @@
 import datetime
 
 from django.shortcuts import render,HttpResponse,redirect
-from .forms import RegisterForm
+from .forms import RegisterForm,EditProfileForm
 from User import models
 from django.utils import timezone
 import pytz
@@ -69,3 +69,38 @@ def signin(request):
         except:
                 print('无此邮箱')
     return render(request, 'signin.html')
+
+def profile(request):
+    islogin(request)
+    userid = request.session.get('UserID', None)
+    user = models.User.objects.filter(User_ID=userid).first()
+    if request.method == 'POST':
+        form = EditProfileForm(instance=user,data=request.POST,files=request.FILES)
+        if form.is_valid():
+            form.save()
+    if request.method == 'GET':
+        form = EditProfileForm(instance=user)
+    return render(request, 'profile.html',{'user':user,
+                                           'form':form
+                                           })
+
+def password(request):
+    islogin(request)
+    userid = request.session.get('UserID', None)
+    user = models.User.objects.filter(User_ID=userid).first()
+    if request.method == 'POST':
+        pwd=request.POST.get('pswd')
+        user.Password=pwd
+        user.save()
+
+    return render(request, 'password.html',{'user':user}
+                  )
+
+def imgcenter(request):
+    islogin(request)
+    userid = request.session.get('UserID', None)
+    user = models.User.objects.filter(User_ID=userid).first()
+
+
+    return render(request, 'imgcenter.html',{'user':user}
+                  )
