@@ -49,3 +49,9 @@ def vmodify(request,dvcode):
         form = VideoForm(instance=tvideo)
     return render(request,"modify.html",{'form':form})
 
+def vplay(request,dvcode):
+    tvideo=Video.objects.filter(DVcode=dvcode).first()
+    if request.method == 'GET':
+        return render(request,"play.html",{
+            'video':tvideo
+        })

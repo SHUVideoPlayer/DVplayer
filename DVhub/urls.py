@@ -29,6 +29,7 @@ urlpatterns = [
     path('user/',User.views.UserPage),
     path('vupload/',views.vupload,name='upload'),
     path('vmodify/<int:dvcode>',views.vmodify,name='modify'),
+    path('vplay/<int:dvcode>',views.vplay,name='vplay'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
