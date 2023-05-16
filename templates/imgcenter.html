@@ -37,13 +37,13 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link link-dark">
+        <a href="{% url 'password' %}" class="nav-link link-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           修改密码
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link link-dark   active">
+        <a href="{% url 'imgcenter' %}" class="nav-link link-dark   active">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
           创作中心
         </a>
@@ -80,20 +80,20 @@
     <div class="container mt-3">
   <h2>全部稿件</h2>
 
-
+{% for vi in videos %}
       <div class="card">
         <div class="card-body">
           <div class="row">
            <div class="col-md-2 column">
-          <img src="{% static 'avplayer.jpg'%}" >
+          <img src="{{vi.CoverFile.url}}" style="height:100px;width:150px" >
            </div>
           <div class="col-md-6 column">
-          <h4 class="card-title">标题</h4>
-          <p class="card-text">简介</p>
-              <p class="card-text">发布时间</p>
+          <h4 class="card-title">{{vi.Title}}</h4>
+          <p class="card-text">{{vi.Content}}</p>
+              <p class="card-text">{{vi.ReleaseTime}}</p>
           </div>
           <div class="col-md-1 column">
-             <a href="#" class="btn btn-info bg-secondary text-white" role="button">编辑</a>
+             <a href="{% url 'modify' vi.DVcode %} " class="btn btn-info bg-secondary text-white" role="button">编辑</a>
           </div>
           <div class="col-md-1 column">
 
@@ -105,7 +105,7 @@
           </div>
         </div>
       </div>
-
+{% endfor %}
 
 </div>
  </div>

@@ -3,6 +3,7 @@ import datetime
 from django.shortcuts import render,HttpResponse,redirect
 from .forms import RegisterForm,EditProfileForm
 from User import models
+from video.models import Video
 from django.utils import timezone
 import pytz
 
@@ -39,23 +40,26 @@ def Register(request):
                                             'RegisterForm':RegiForm
                                             })
 
-def test(request):
-    return render(request, 'index.html')
-
 
 def UserPage(request):
-    islogin(request)
+    if islogin(request) == False:
+        return redirect('/login')
     userid=request.session.get('UserID', None)
     user=models.User.objects.filter(User_ID=userid).first()
-    print(user.Email)
-    print(user.Profile_photo.url)
-    return render(request,'author.html',{'user':user})
+    videlist = Video.objects.filter(User=user)
+
+    return render(request,'author.html',{'user':user,
+                                         'videolist':videlist})
 
 def islogin(request):
     if not (request.session.get('is_login', None) == True):
-        return(request,'signin.html')
+        print(666)
+        return False
+    else:
+        return True
 def signin(request):
-    islogin(request)
+    if islogin(request) == True:
+        return redirect('/user')
     if (request.method == "POST"):
         Useremail=request.POST.get('email')
         Userpassword=request.POST.get('password')
@@ -65,13 +69,14 @@ def signin(request):
                 request.session['is_login']=True
                 request.session['UserID']=user.User_ID
                 print('true')
-                return UserPage(request)
+                return redirect('/user')
         except:
                 print('无此邮箱')
     return render(request, 'signin.html')
 
 def profile(request):
-    islogin(request)
+    if islogin(request) == False:
+        return redirect('/login')
     userid = request.session.get('UserID', None)
     user = models.User.objects.filter(User_ID=userid).first()
     if request.method == 'POST':
@@ -85,7 +90,8 @@ def profile(request):
                                            })
 
 def password(request):
-    islogin(request)
+    if islogin(request) == False:
+        return redirect('/login')
     userid = request.session.get('UserID', None)
     user = models.User.objects.filter(User_ID=userid).first()
     if request.method == 'POST':
@@ -97,10 +103,23 @@ def password(request):
                   )
 
 def imgcenter(request):
-    islogin(request)
+    if islogin(request) == False:
+        return redirect('/login')
     userid = request.session.get('UserID', None)
     user = models.User.objects.filter(User_ID=userid).first()
+    videos = Video.objects.filter(User=user)
 
-
-    return render(request, 'imgcenter.html',{'user':user}
+    return render(request, 'imgcenter.html',{'user':user,
+                                             'videos':videos}
                   )
+
+def logout(request):
+    if not request.session.get('is_login', None):  # logout就是刷新session,即清空了登录信息，然后再跳转到login
+        # 如果本来就未登录，也就没有登出一说
+        return redirect("/login")
+    request.session.flush()
+    # 或者使用下面的方法
+    # del request.session['is_login']
+    # del request.session['user_id']
+    # del request.session['user_name']
+    return redirect("/login")

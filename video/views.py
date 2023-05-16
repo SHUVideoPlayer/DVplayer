@@ -1,9 +1,14 @@
 from django.shortcuts import render,redirect,HttpResponse
 from .forms import VideoForm
 from .models import Video,User,Classification
+from User.views import islogin
 # Create your views here.
 
 def vupload(request):
+    if islogin(request) == False:
+        return redirect('/login')
+    userid = request.session.get('UserID', None)
+    user = User.objects.filter(User_ID=userid).first()
     if request.method == 'POST':
         form = VideoForm(request.POST, request.FILES)
         tuserid=request.session.get('UserID', None)
@@ -26,12 +31,15 @@ def vupload(request):
         if not (request.session.get('is_login', None) == True):
             return redirect('/s')
         form = VideoForm()
-        return render(request,"upload.html",{'form':form})
+        return render(request,"upload.html",{'form':form,
+                                             'user':user})
     
 
 def vmodify(request,dvcode):
-    if not (request.session.get('is_login', None) == True):
-        return redirect('/s')
+    if islogin(request) == False:
+        return redirect('/login')
+    userid = request.session.get('UserID', None)
+    user = User.objects.filter(User_ID=userid).first()
     tvideo=Video.objects.filter(DVcode=dvcode).first()
     if tvideo is None:
         return render(request,"wrong/NosuchFile.html")
@@ -47,7 +55,8 @@ def vmodify(request,dvcode):
         
     if request.method == 'GET':
         form = VideoForm(instance=tvideo)
-    return render(request,"modify.html",{'form':form})
+    return render(request,"modify.html",{'form':form,
+                                         'user':user})
 
 def vplay(request,dvcode):
     tvideo=Video.objects.filter(DVcode=dvcode).first()

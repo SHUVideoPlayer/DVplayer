@@ -114,10 +114,10 @@
             </ul> {% endcomment %}
             <ul class="navbar-nav ml-auto align-items-center">
                 <li class="nav-item">
-                <a class="nav-link active" href="index.html">Home</a>
+                <a class="nav-link active" href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="post.html">Post</a>
+                <a class="nav-link active" href="{% url 'user' %}">个人主页</a>
                 </li>
     		<li class="nav-item dropdown">
     		<a class="nav-link" href="#" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img class="rounded-circle mr-2" src="{{user.Profile_photo.url}}" width="30"><span class="align-middle">{{user.NickName}}用户名</span></a>
@@ -132,20 +132,20 @@
         <a><h5>66</h5></a>
             <a>粉丝</a>
         </div>
-        <div class="col-md-4 column" href="#">
+        <div class="col-md-4 column" href="{% url 'imgcenter'%}">
         <a><h5>66</h5></a>
             <a>投稿</a>
         </div>
          </div>
             </div>
-    <span><a class="dropdown-item rounded-2" href="#">个人中心</a></span>
+    <span><a class="dropdown-item rounded-2" href="{% url 'profile' %}">个人中心</a></span>
     <span><a class="dropdown-item rounded-2" href="#">关注</a></span>
     <span><a class="dropdown-item rounded-2" href="#">粉丝</a></span>
-    <span><a class="dropdown-item rounded-2" href="#">投稿管理</a></span>
+    <span><a class="dropdown-item rounded-2" href="{% url 'imgcenter'%}">投稿管理</a></span>
     <span><a class="dropdown-item rounded-2"  href="#">我的收藏</a></span>
      <div class="dropdown-divider">
      </div>
-    <span><a class="dropdown-item rounded-2" href="#">退出登录</a></span>
+    <span><a class="dropdown-item rounded-2" href="{% url 'logout'%}">退出登录</a></span>
     </div>
 
 			</li>

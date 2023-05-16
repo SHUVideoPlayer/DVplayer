@@ -18,31 +18,22 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 import User.views
-
+import main.views
 from video import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Register/',User.views.Register),
-    path('',User.views.test),
-    path('s',User.views.signin),
-    path('user',User.views.UserPage),
+    path('',main.views.test,name='index'),
+    path('login/',User.views.signin,name='login'),
+    path('logout/',User.views.logout,name='logout'),
+    path('user',User.views.UserPage,name='user'),
     path('vupload/',views.vupload,name='upload'),
+    path('vmodify/<int:dvcode>', views.vmodify, name='modify'),
+    path('vplay/<int:dvcode>', views.vplay, name='vplay'),
     path('profile/',User.views.profile,name='profile'),
     path('password/',User.views.password,name='password'),
     path('imgcenter/',User.views.imgcenter,name='imgcenter'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-    path('Register/',User.views.Register),
-    path('',User.views.test),
-    path('s',User.views.signin),
-    path('user/',User.views.UserPage),
-    path('vupload/',views.vupload,name='upload'),
-    path('vmodify/<int:dvcode>',views.vmodify,name='modify'),
-    path('vplay/<int:dvcode>',views.vplay,name='vplay'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
 
 
